@@ -2,7 +2,7 @@ import html from "html-literal";
 import dogPic from "../../assets/img/photo-1510771463146-e89e6e86560e.jpg";
 
 export default state => html`
-  <section id="bio">
+  <section id="Bio">
     <h2>Vivamus ac justo eu nisi</h2>
     <img src="${dogPic}" alt="me" />
 

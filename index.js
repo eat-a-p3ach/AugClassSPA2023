@@ -17,6 +17,7 @@ function render(state = store.Home) {
   router.updatePageLinks();
 
   afterRender(state);
+  router.updatePageLinks();
 }
 
 function afterRender(state) {
@@ -35,39 +36,42 @@ function afterRender(state) {
       document.querySelector("nav > ul").classList.toggle("hidden--mobile")
     );
 
-    if (state.view === "Order") {
-      document.querySelector("form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const inputList = event.target.elements;
+  if (state.view === "Order") {
+    document.querySelector("form").addEventListener("submit", event => {
+      event.preventDefault();
+      const inputList = event.target.elements;
 
-        const toppings = [];
-        for (let input of inputList.toppings) {
-          if (input.checked) {
-            toppings.push(input.value);
-          }
+      const toppings = [];
+      for (let input of inputList.toppings) {
+        if (input.checked) {
+          toppings.push(input.value);
         }
-        const requestData = {
-          crust: inputList.crust.value,
-          cheese: inputList.cheese.value,
-          sauce: inputList.sauce.value,
-          toppings: toppings,
-          customer: "~Update with YOUR name~",
-        };
+      }
+      const requestData = {
+        crust: inputList.crust.value,
+        cheese: inputList.cheese.value,
+        sauce: inputList.sauce.value,
+        toppings: toppings,
+        customer: "~Update with YOUR name~"
+      };
 
-        store.Pizza.pizzas.push(requestData);
-        router.navigate("/Pizza");
-      });
-    }
+      store.Pizza.pizzas.push(requestData);
+      router.navigate("/Pizza");
+    });
+  }
 }
 
 router
   .on({
-    "/": () => {
-      render();
-    },
+    "/": () => render(),
     ":view": params => {
       let view = capitalize(params.data.view);
-      render(store[view]);
+      if (view in store) {
+        render(store[view]);
+      } else {
+        render(store.Viewnotfound);
+        console.log(`View ${view} not defined`);
+      }
     }
   })
   .resolve();
