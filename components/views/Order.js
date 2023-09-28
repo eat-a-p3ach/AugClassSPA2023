@@ -1,5 +1,5 @@
 import html from "html-literal";
-export default () => html`
+export default state => html`
   <form id="order" method="POST" action="">
     <h2>Order a pizza</h2>
     <div>
@@ -76,12 +76,7 @@ export default () => html`
       />
       <label for="top5">Red Pepper</label>
     </div>
-    <input
-        type="hidden"
-        name="customer"
-        id="customer"
-        value="<Your Name>"
-      />
+    <input type="hidden" name="customer" id="customer" value="<Your Name>" />
     <input type="submit" name="submit" value="Submit Pizza" />
   </form>
 `;
